@@ -5,8 +5,8 @@ const prisma = new PrismaClient();
 const router = Router();
 
 router.post("/api/addEmployee", async (req, res) => {
+    const { employeeNumber, area, name, firstName, lastName, email } = req.body;
     try {
-        const { employeeNumber, area, name, firstName, lastName, email } = req.body;
         if (!employeeNumber || !area || !name || !firstName || !lastName || !email) {
             return res.status(400).json({ message: 'Todos los campos son requeridos' });
         }
