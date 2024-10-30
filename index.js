@@ -1,9 +1,15 @@
 import express from "express";
 import employeeRoutes from "./src/routes/employees/employee.js";
 import courseRoutes from "./src/routes/courses/course.js";
+import cors from "cors";
 
 const app = express();
 const port = 3000;
+const corsOptions = {
+    origin: "http://localhost:5173",
+    credentials: true,
+};
+app.use(cors(corsOptions));
 app.use(express.json());
 
 app.use(employeeRoutes);
