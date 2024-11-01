@@ -31,7 +31,13 @@ router.post("/api/addEmployee", async (req, res) => {
 
 router.get("/api/getEmployees", async (_, res) => {
     try {
-        const employees = await prisma.employees.findMany();
+        const employees = await prisma.employees.findMany(
+            {
+                orderBy: {
+                    id: "desc",
+                },
+            }
+        );
         return res.status(200).json({ message: "Empleados encontrados", employees });
     } catch (error) {
         console.error("Error en el servidor:", error);
