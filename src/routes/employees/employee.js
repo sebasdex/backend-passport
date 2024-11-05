@@ -60,7 +60,7 @@ router.get("/api/getEmployee/:id", async (req, res) => {
     }
 });
 
-router.put("/api/employee/:id", async (req, res) => {
+router.put("/api/updateEmployee/:id", async (req, res) => {
     const { id } = req.params;
     const { employeeNumber, area, name, firstName, lastName, email } = req.body;
     try {
