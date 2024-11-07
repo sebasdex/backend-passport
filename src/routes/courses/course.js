@@ -53,6 +53,8 @@ router.get("/api/getCourse", async (_, res) => {
                             name: true,
                             firstName: true,
                             lastName: true,
+                            employeeNumber: true,
+                            area: true,
                         }
                     }
                 },
