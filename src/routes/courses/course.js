@@ -6,8 +6,19 @@ const router = Router();
 
 router.post("/api/addCourse", async (req, res) => {
     const { courseName, approved, place, description, instructor, startDate, endDate, studentId } = req.body;
+    console.log(studentId)
+    if (!studentId || isNaN(studentId)) {
+        return res.status(400).json({ message: "El campo studentId debe ser un número válido" });
+    }
+
+    // Verificación de otros campos
+    if (!courseName || approved === undefined || !place || !description || !instructor || !startDate) {
+        return res.status(400).json({ message: 'Todos los campos son requeridos' });
+    }
+
+
     const dateISOStart = new Date(startDate).toISOString();
-    const dateISOEnd = new Date(endDate).toISOString();
+    const dateISOEnd = endDate ? new Date(endDate).toISOString() : null;
     const course = {
         courseName,
         approved,
@@ -17,14 +28,11 @@ router.post("/api/addCourse", async (req, res) => {
         startDate: dateISOStart,
         endDate: dateISOEnd,
         student: {
-            connect: { id: studentId }
+            connect: { id: Number(studentId) },
         }
     };
     try {
-        if (!courseName || !approved || !place || !description || !instructor || !startDate || !endDate || !studentId
-        ) {
-            return res.status(400).json({ message: 'Todos los campos son requeridos' });
-        }
+
         const newCourse = await prisma.courses.create({
             data: course,
         });
@@ -37,8 +45,44 @@ router.post("/api/addCourse", async (req, res) => {
 
 router.get("/api/getCourse", async (_, res) => {
     try {
-        const courses = await prisma.courses.findMany();
+        const courses = await prisma.courses.findMany(
+            {
+                include: {
+                    student: {
+                        select: {
+                            name: true,
+                            firstName: true,
+                            lastName: true,
+                        }
+                    }
+                },
+            }
+        );
         res.status(200).json({ message: "Courses found", courses });
+    } catch (error) {
+        console.error("Error en el servidor:", error);
+        res.status(500).json({ message: "Error en el servidor" });
+    }
+});
+
+router.get("/api/getCourse/:id", async (req, res) => {
+    const { id } = req.params;
+    try {
+        const course = await prisma.courses.findUnique({
+            where: {
+                id: Number(id),
+            },
+            include: {
+                student: {
+                    select: {
+                        name: true,
+                        firstName: true,
+                        lastName: true,
+                    }
+                }
+            },
+        });
+        res.status(200).json({ message: "Course found", course });
     } catch (error) {
         console.error("Error en el servidor:", error);
         res.status(500).json({ message: "Error en el servidor" });
@@ -49,7 +93,7 @@ router.put("/api/updateCourse/:id", async (req, res) => {
     const { id } = req.params;
     const { courseName, approved, place, description, instructor, startDate, endDate, studentId } = req.body;
     const dateISOStart = new Date(startDate).toISOString();
-    const dateISOEnd = new Date(endDate).toISOString();
+    const dateISOEnd = endDate ? new Date(endDate).toISOString() : null;
     const course = {
         courseName,
         approved,
@@ -63,7 +107,7 @@ router.put("/api/updateCourse/:id", async (req, res) => {
         }
     };
     try {
-        if (!courseName || approved === undefined || !place || !description || !instructor || !startDate || !endDate || !studentId
+        if (!courseName || approved === undefined || !place || !description || !instructor || !startDate || !studentId
         ) {
             return res.status(400).json({ message: 'Todos los campos son requeridos' });
         }
