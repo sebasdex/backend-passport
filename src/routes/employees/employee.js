@@ -1,4 +1,4 @@
-import e, { Router } from "express";
+import { Router } from "express";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
