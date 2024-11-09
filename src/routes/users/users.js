@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcrypt";
 
 const prisma = new PrismaClient();
 const router = Router();
@@ -18,10 +19,13 @@ router.post("/api/addUser", async (req, res) => {
         if (userExists) {
             return res.status(400).json({ message: "El usuario ya existe" });
         }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+
         const newUser = await prisma.users.create({
             data: {
                 email,
-                password,
+                password: hashedPassword,
                 role,
                 employee: {
                     connect: {
@@ -45,6 +49,9 @@ router.get("/api/getUsers", async (_, res) => {
             {
                 orderBy: {
                     id: "desc",
+                },
+                include: {
+                    employee: true,
                 },
             }
         );
@@ -74,25 +81,44 @@ router.put("/api/updateUser/:id", async (req, res) => {
     const { id } = req.params;
     const { email, password, role, employeeId } = req.body;
     try {
-        if (!email || !password || !role || !employeeId) {
+        if (!email || !role || !employeeId) {
             return res.status(400).json({ message: 'Todos los campos son requeridos' });
         }
+        const userExists = await prisma.users.findUnique({
+            where: {
+                email,
+                NOT: {
+                    id: Number(id),
+                },
+            },
+
+        });
+        if (userExists) {
+            return res.status(400).json({ message: "El email ya esta en uso por otro usuario" });
+        }
+
+        const updateUser = {
+            email,
+            role,
+            employee: {
+                connect: {
+                    id: Number(employeeId),
+                },
+            },
+        }
+
+        if (password) {
+            updateUser.password = await bcrypt.hash(password, 10);
+        }
+
         const updatedUser = await prisma.users.update({
             where: {
                 id: Number(id),
             },
-            data: {
-                email,
-                password,
-                role,
-                employee: {
-                    connect: {
-                        id: Number(employeeId),
-                    },
-                },
-            },
+            data: updateUser,
         });
         return res.status(200).json({ message: "Usuario actualizado", updatedUser });
+
     } catch (error) {
         console.error("Error en el servidor:", error);
         return res.status(500).json({ message: "Ocurrió un error en el servidor" });
