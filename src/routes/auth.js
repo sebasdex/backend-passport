@@ -1,14 +1,18 @@
 import { login, logout } from '../controller/authController.js';
 import { Router } from 'express';
-import isAuth from '../middlewares/authMiddleware.js';
 
 const router = Router();
 
 router.post('/api/login', login);
-router.post('/api/logout', isAuth, logout);
+router.post('/api/logout', logout);
 
-router.get('/api/checkSession', isAuth, (req, res) => {
-    res.json({ user: req.user });
+router.get('/api/checkSession', (req, res) => {
+    console.log(req.session);
+    if (req.session.user) {
+        res.json({ isAuthenticated: true, user: req.session.user });
+    } else {
+        res.json({ isAuthenticated: false });
+    }
 });
 
 

@@ -22,8 +22,13 @@ async function login(req, res) {
                 return res.status(401).json({ message: 'Invalid Credentials' });
             }
             req.session.user = { id: searchUser.id, email: searchUser.email };
-            console.log(req.session.user);
-            res.json({ message: 'Login Successful', user: searchUser });
+            console.log(req.session);
+            req.session.save((err) => {
+                if (err) {
+                    return res.status(500).json({ message: 'Error al guardar sesión' });
+                }
+                res.json({ message: 'Login Successful', user: searchUser });
+            });
         });
 
     } catch (error) {
