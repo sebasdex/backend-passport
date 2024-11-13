@@ -21,7 +21,7 @@ async function login(req, res) {
             if (!isMatch) {
                 return res.status(401).json({ message: 'Invalid Credentials' });
             }
-            req.session.user = { id: searchUser.id, email: searchUser.email };
+            req.session.user = { id: searchUser.id, email: searchUser.email, role: searchUser.role, employeeId: searchUser.employeeId };
             console.log(req.session);
             req.session.save((err) => {
                 if (err) {
