@@ -6,7 +6,6 @@ const router = Router();
 
 router.post("/api/addCourse", async (req, res) => {
     const { courseName, approved, place, description, instructor, startDate, endDate, studentId } = req.body;
-    console.log(studentId)
     if (!studentId || isNaN(studentId)) {
         return res.status(400).json({ message: "El campo studentId debe ser un número válido" });
     }
@@ -15,7 +14,6 @@ router.post("/api/addCourse", async (req, res) => {
     if (!courseName || approved === undefined || !place || !description || !instructor || !startDate) {
         return res.status(400).json({ message: 'Todos los campos son requeridos' });
     }
-
 
     const dateISOStart = new Date(startDate).toISOString();
     const dateISOEnd = endDate ? new Date(endDate).toISOString() : null;
@@ -32,7 +30,6 @@ router.post("/api/addCourse", async (req, res) => {
         }
     };
     try {
-
         const newCourse = await prisma.courses.create({
             data: course,
         });

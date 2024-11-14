@@ -9,13 +9,13 @@ import isAuth from "./src/middlewares/authMiddleware.js";
 
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 const corsOptions = {
-    origin: "http://localhost:5173",
+    origin: process.env.ORIGIN_FRONT,
     credentials: true,
 };
 app.use(session({
-    secret: 'secret',
+    secret: process.env.COOKIE_SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: { secure: false }
@@ -30,5 +30,5 @@ app.use('/users', isAuth, userRoutes);
 
 
 app.listen(port, () => {
-    console.log("Server is running on port 3000");
+    console.log(`Server is running on port ${port}`);
 });
