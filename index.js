@@ -6,7 +6,7 @@ import userRoutes from "./src/routes/users/users.js";
 import authRoutes from "./src/routes/auth.js";
 import cors from "cors";
 import isAuth from "./src/middlewares/authMiddleware.js";
-
+import { userStart } from "./src/controller/userStart.js";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -28,7 +28,10 @@ app.use('/employees', isAuth, employeeRoutes);
 app.use('/courses', isAuth, courseRoutes);
 app.use('/users', isAuth, userRoutes);
 
-
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+userStart().then(() => {
+    app.listen(port, () => {
+        console.log(`Server is running on port ${port}`);
+    });
+}).catch((error) => {
+    console.error("Error al iniciar el servidor:", error);
 });
