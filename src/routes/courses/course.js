@@ -5,6 +5,9 @@ const prisma = new PrismaClient();
 const router = Router();
 
 router.post("/api/addCourse", async (req, res) => {
+    if (req.user.role !== 'administrador') {
+        return res.status(401).json({ message: 'No tienes permisos para acceder a esta ruta' });
+    }
     const { courseName, approved, place, description, instructor, startDate, endDate, studentId } = req.body;
     if (!studentId || isNaN(studentId)) {
         return res.status(400).json({ message: "El campo studentId debe ser un número válido" });
@@ -40,7 +43,10 @@ router.post("/api/addCourse", async (req, res) => {
     }
 });
 
-router.get("/api/getCourse", async (_, res) => {
+router.get("/api/getCourse", async (req, res) => {
+    if (req.user.role !== 'administrador' && req.user.role !== 'empleado') {
+        return res.status(401).json({ message: 'No tienes permisos para acceder a esta ruta' });
+    }
     try {
         const courses = await prisma.courses.findMany(
             {
@@ -65,6 +71,9 @@ router.get("/api/getCourse", async (_, res) => {
 });
 
 router.get("/api/getCourse/:id", async (req, res) => {
+    if (req.user.role !== 'administrador') {
+        return res.status(401).json({ message: 'No tienes permisos para acceder a esta ruta' });
+    }
     const { id } = req.params;
     try {
         const course = await prisma.courses.findUnique({
@@ -89,6 +98,9 @@ router.get("/api/getCourse/:id", async (req, res) => {
 });
 
 router.put("/api/updateCourse/:id", async (req, res) => {
+    if (req.user.role !== 'administrador') {
+        return res.status(401).json({ message: 'No tienes permisos para acceder a esta ruta' });
+    }
     const { id } = req.params;
     const { courseName, approved, place, description, instructor, startDate, endDate, studentId } = req.body;
     const dateISOStart = new Date(startDate).toISOString();
@@ -125,6 +137,9 @@ router.put("/api/updateCourse/:id", async (req, res) => {
 });
 
 router.delete("/api/deleteCourse/:id", async (req, res) => {
+    if (req.user.role !== 'administrador') {
+        return res.status(401).json({ message: 'No tienes permisos para acceder a esta ruta' });
+    }
     const { id } = req.params;
     try {
         const deletedCourse = await prisma.courses.delete({

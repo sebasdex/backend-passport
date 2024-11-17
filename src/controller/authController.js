@@ -40,9 +40,11 @@ function logout(req, res) {
         if (err) {
             return res.status(500).json({ message: 'Error al cerrar sesión' });
         }
-        res.json({ message: 'Sesión cerrada' });
+        res.status(200).json({ message: 'Sesión cerrada correctamente' });
     });
 }
+
+
 
 export {
     login,

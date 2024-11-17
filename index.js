@@ -4,6 +4,7 @@ import employeeRoutes from "./src/routes/employees/employee.js";
 import courseRoutes from "./src/routes/courses/course.js";
 import userRoutes from "./src/routes/users/users.js";
 import authRoutes from "./src/routes/auth.js";
+import homeRoutes from "./src/routes/home/home.js";
 import cors from "cors";
 import isAuth from "./src/middlewares/authMiddleware.js";
 import { userStart } from "./src/controller/userStart.js";
@@ -27,6 +28,7 @@ app.use('/auth', authRoutes);
 app.use('/employees', isAuth, employeeRoutes);
 app.use('/courses', isAuth, courseRoutes);
 app.use('/users', isAuth, userRoutes);
+app.use(isAuth, homeRoutes);
 
 userStart().then(() => {
     app.listen(port, () => {
