@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 const router = Router();
 
 router.post("/api/addCourse", async (req, res) => {
-    if (req.user.role !== 'administrador') {
+    if (req.user.role !== process.env.ROLE_ONE) {
         return res.status(401).json({ message: 'No tienes permisos para acceder a esta ruta' });
     }
     const { courseName, approved, place, description, instructor, startDate, endDate, studentId } = req.body;
@@ -44,7 +44,7 @@ router.post("/api/addCourse", async (req, res) => {
 });
 
 router.get("/api/getCourse", async (req, res) => {
-    if (req.user.role !== 'administrador' && req.user.role !== 'empleado') {
+    if (req.user.role !== process.env.ROLE_ONE && req.user.role !== process.env.ROLE_TWO) {
         return res.status(401).json({ message: 'No tienes permisos para acceder a esta ruta' });
     }
     try {
@@ -71,7 +71,7 @@ router.get("/api/getCourse", async (req, res) => {
 });
 
 router.get("/api/getCourse/:id", async (req, res) => {
-    if (req.user.role !== 'administrador') {
+    if (req.user.role !== process.env.ROLE_ONE) {
         return res.status(401).json({ message: 'No tienes permisos para acceder a esta ruta' });
     }
     const { id } = req.params;
@@ -98,7 +98,7 @@ router.get("/api/getCourse/:id", async (req, res) => {
 });
 
 router.put("/api/updateCourse/:id", async (req, res) => {
-    if (req.user.role !== 'administrador') {
+    if (req.user.role !== process.env.ROLE_ONE) {
         return res.status(401).json({ message: 'No tienes permisos para acceder a esta ruta' });
     }
     const { id } = req.params;
@@ -137,7 +137,7 @@ router.put("/api/updateCourse/:id", async (req, res) => {
 });
 
 router.delete("/api/deleteCourse/:id", async (req, res) => {
-    if (req.user.role !== 'administrador') {
+    if (req.user.role !== process.env.ROLE_ONE) {
         return res.status(401).json({ message: 'No tienes permisos para acceder a esta ruta' });
     }
     const { id } = req.params;

@@ -19,7 +19,12 @@ app.use(session({
     secret: process.env.COOKIE_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: false }
+    cookie: {
+        secure: false,
+        maxAge: 1000 * 60 * 60 * 24,
+        httpOnly: true,
+        sameSite: "lax",
+    }
 }))
 app.use(cors(corsOptions));
 app.use(express.json());

@@ -11,20 +11,20 @@ export const userStart = async () => {
     if (!userExist) {
         const newEmployee = await prisma.employees.create({
             data: {
-                employeeNumber: "PRUEBA001",
-                area: "Area de prueba",
-                name: "Administrador",
-                firstName: "admin",
-                lastName: "admin",
-                email: "admin@testing.com",
+                employeeNumber: "EMP001",
+                area: "Marketing",
+                name: "Alan",
+                firstName: "Ross",
+                lastName: "Perot",
+                email: "alan@testing.com",
             },
         });
         const hashedPassword = await bcrypt.hash("12345678", 10);
         await prisma.users.create({
             data: {
-                email: "admin@testing.com",
+                email: "alan@testing.com",
                 password: hashedPassword,
-                role: "administrador",
+                role: process.env.ROLE_ONE,
                 employee: {
                     connect: {
                         id: newEmployee.id,
