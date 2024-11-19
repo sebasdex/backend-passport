@@ -8,9 +8,6 @@ import homeRoutes from "./src/routes/home/home.js";
 import cors from "cors";
 import isAuth from "./src/middlewares/authMiddleware.js";
 import { userStart } from "./src/controller/userStart.js";
-import dotenv from "dotenv";
-
-dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3000;
