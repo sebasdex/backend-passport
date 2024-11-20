@@ -12,7 +12,7 @@ async function isAuth(req, res, next) {
             },
         });
         if (!userExist) {
-            return res.status(401).json({ message: 'Usuario no encontrado' });
+            return res.status(404).json({ message: 'Usuario no encontrado' });
         }
         req.user = userExist;
         next();
