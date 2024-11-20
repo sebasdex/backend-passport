@@ -13,7 +13,11 @@ import Redis from "ioredis";
 
 
 const app = express();
-const redisClient = new Redis();
+const redisClient = new Redis(
+    {
+        host: process.env.REDIS_HOST,
+    }
+);
 const port = process.env.PORT || 3000;
 const corsOptions = {
     origin: process.env.ORIGIN_FRONT,
