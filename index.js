@@ -9,29 +9,34 @@ import cors from "cors";
 import isAuth from "./src/middlewares/authMiddleware.js";
 import { userStart } from "./src/controller/userStart.js";
 import RedisStore from "connect-redis";
-import Redis from "ioredis";
-
+import { createClient } from "redis";
 
 const app = express();
-const redisClient = new Redis(
-    {
+const redisClient = createClient({
+    password: process.env.REDIS_PASSWORD,
+    socket: {
         host: process.env.REDIS_HOST,
+        port: process.env.REDIS_PORT,
     }
-);
+});
+
+redisClient.connect().catch((err) => {
+    console.error("Error al conectar a Redis:", err);
+});
+
+const redisStore = new RedisStore({ client: redisClient, prefix: "session:" });
 const port = process.env.PORT || 3000;
 const corsOptions = {
     origin: process.env.ORIGIN_FRONT,
     credentials: true,
 };
 app.use(session({
-    store: new RedisStore({
-        client: redisClient,
-    }),
+    store: redisStore,
     secret: process.env.COOKIE_SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: {
-        secure: true,
+        secure: false,
         maxAge: 1000 * 60 * 60 * 24,
         httpOnly: true,
         sameSite: "lax",
