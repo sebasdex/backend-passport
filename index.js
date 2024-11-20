@@ -8,14 +8,21 @@ import homeRoutes from "./src/routes/home/home.js";
 import cors from "cors";
 import isAuth from "./src/middlewares/authMiddleware.js";
 import { userStart } from "./src/controller/userStart.js";
+import RedisStore from "connect-redis";
+import Redis from "ioredis";
+
 
 const app = express();
+const redisClient = new Redis();
 const port = process.env.PORT || 3000;
 const corsOptions = {
     origin: process.env.ORIGIN_FRONT,
     credentials: true,
 };
 app.use(session({
+    store: new RedisStore({
+        client: redisClient,
+    }),
     secret: process.env.COOKIE_SECRET,
     resave: false,
     saveUninitialized: false,
