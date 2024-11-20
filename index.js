@@ -39,7 +39,7 @@ app.use(session({
         secure: false,
         maxAge: 1000 * 60 * 60 * 24,
         httpOnly: true,
-        sameSite: "lax",
+        sameSite: "none",
     }
 }))
 app.use(cors(corsOptions));
