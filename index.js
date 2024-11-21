@@ -33,13 +33,9 @@ const corsOptions = {
             process.env.ORIGIN_FRONT,
             process.env.LOCAL_FRONT,
         ];
-
-        // Permite solicitudes sin origen (por ejemplo, Postman)
         if (!origin) {
             return callback(null, true);
         }
-
-        // Valida el origen
         if (allowedOrigins.includes(origin)) {
             callback(null, true);
         } else {
