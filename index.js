@@ -27,20 +27,28 @@ redisClient.connect().catch((err) => {
 const redisStore = new RedisStore({ client: redisClient, prefix: "session:" });
 const port = process.env.PORT || 3000;
 
-const allowedOrigins = [
-    process.env.ORIGIN_FRONT,
-    process.env.LOCAL_FRONT,
-];
 const corsOptions = {
     origin: (origin, callback) => {
-        if (!origin || allowedOrigins.includes(origin)) {
+        const allowedOrigins = [
+            process.env.ORIGIN_FRONT,
+            process.env.LOCAL_FRONT,
+        ];
+
+        // Permite solicitudes sin origen (por ejemplo, Postman)
+        if (!origin) {
+            return callback(null, true);
+        }
+
+        // Valida el origen
+        if (allowedOrigins.includes(origin)) {
             callback(null, true);
         } else {
-            callback(new Error("Not allowed by CORS"));
+            console.error(`Origen no permitido por CORS: ${origin}`);
+            callback(new Error("Origen no permitido por CORS"));
         }
     },
     credentials: true,
-}
+};
 
 app.use(cors(corsOptions));
 app.set("trust proxy", 1);
