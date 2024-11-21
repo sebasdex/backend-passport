@@ -26,22 +26,36 @@ redisClient.connect().catch((err) => {
 
 const redisStore = new RedisStore({ client: redisClient, prefix: "session:" });
 const port = process.env.PORT || 3000;
+
+const allowedOrigins = [
+    process.env.ORIGIN_FRONT,
+    process.env.LOCAL_FRONT,
+];
 const corsOptions = {
-    origin: process.env.ORIGIN_FRONT,
+    origin: (origin, callback) => {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
     credentials: true,
-};
+}
+
+app.use(cors(corsOptions));
+app.set("trust proxy", 1);
 app.use(session({
     store: redisStore,
     secret: process.env.COOKIE_SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: {
-        secure: true,
+        secure: process.env.NODE_ENV === "production",
         maxAge: 1000 * 60 * 60 * 24,
         httpOnly: true,
     }
 }))
-app.use(cors(corsOptions));
+
 app.use(express.json());
 
 app.use('/auth', authRoutes);
