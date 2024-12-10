@@ -1,6 +1,8 @@
 # Sistema de Gestión de Empleados y Cursos (Backend)
+ 
+El desarrollo de este proyecto tiene como objetivo consolidar y mejorar mis habilidades en **JavaScript**, **Express.js** y la creación de APIs RESTful. Estoy interesado en recibir **retroalimentación constructiva** sobre el código, la arquitectura o cualquier aspecto del proyecto que pueda optimizarse, con el fin de seguir aprendiendo y aplicando mejores prácticas en el desarrollo backend.  
 
-Este proyecto es una API REST desarrollada con **Express.js**, diseñada para gestionar usuarios, empleados y sus cursos. Maneja autenticación basada en sesiones con **express-session** y **Redis**, y utiliza **Prisma** como ORM para interactuar con una base de datos PostgreSQL.
+Este proyecto es una API desarrollada con **Express.js**, diseñada para gestionar usuarios, empleados y sus cursos. Maneja autenticación basada en sesiones con **express-session**, **Redis** para almacenar la sesión, y utiliza **Prisma** como ORM para interactuar con una base de datos PostgreSQL. 
 
 ## Características
 - **Usuarios**: Registrar, actualizar y eliminar cuentas.  
@@ -9,12 +11,12 @@ Este proyecto es una API REST desarrollada con **Express.js**, diseñada para ge
 - **Autenticación con sesiones**: Manejo de inicio de sesión y cierre de sesión mediante sesiones almacenadas en Redis.
 
 ## Tecnologías utilizadas
-- **Node.js** con **Express.js**: Framework backend.  
-- **pnpm**: Gestor de dependencias rápido y eficiente.  
-- **Redis**: Almacenamiento de sesiones.  
-- **express-session**: Middleware para sesiones en el servidor.  
-- **Prisma**: ORM para interactuar con PostgreSQL.  
-- **PostgreSQL**: Base de datos relacional.  
+- **Node.js** con **Express.js** 
+- **pnpm** 
+- **Redis** 
+- **express-session**  
+- **Prisma**  
+- **PostgreSQL**  
 
 ## Instalación y configuración
 1. Clona este repositorio:  
@@ -78,7 +80,8 @@ src/
 
 ```
 ## Despliegue
-Este proyecto está configurado para ser desplegado en Vercel. Asegúrate de configurar correctamente las variables de entorno en la plataforma antes de desplegar.
+Este proyecto está configurado para ser desplegado en Vercel.  
+Asegúrate de configurar correctamente las variables de entorno en la plataforma antes de desplegar.
 
 
 
