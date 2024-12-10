@@ -1,4 +1,4 @@
-# Sistema de Gestión de Empleados y Cursos (Backend)
+# Sistema de Gestión de Empleados y Cursos
  
 El desarrollo de este proyecto tiene como objetivo consolidar y mejorar mis habilidades en **JavaScript**, **Express.js** y la creación de APIs RESTful. Estoy interesado en recibir **retroalimentación constructiva** sobre el código, la arquitectura o cualquier aspecto del proyecto que pueda optimizarse, con el fin de seguir aprendiendo y aplicando mejores prácticas en el desarrollo backend.  
 
@@ -38,23 +38,34 @@ Este proyecto es una API desarrollada con **Express.js**, diseñada para gestion
 ## Rutas Principales
 
 **Usuarios**
-  - POST /api/users: Registrar un nuevo usuario.
-  - PUT /api/users/:id: Actualizar un usuario existente.
-  - DELETE /api/users/:id: Eliminar un usuario.
+  - POST /api/addUser: Registrar un nuevo usuario.
+  - GET /api/getUsers: Obtener todos los usuarios.
+  - GET /api/getUser/:id: Obtener información de un usuario.
+  - PUT /api/updateUser/:id: Actualizar un usuario existente.
+  - DELETE /api/deleteUser/:id: Eliminar un usuario.
   
 **Empleados**
-  - POST /api/employees: Registrar un empleado.
-  - PUT /api/employees/:id: Actualizar información de un empleado.
-  - GET /api/employees/:id: Obtener información de un empleado.
+  - POST /api/addEmployee: Registrar un empleado.
+  - GET /api/getEmployee/:id: Obtener información de un empleado.
+  - PUT /api/updateEmployee/:id: Actualizar información de un empleado.
+  - GET /api/getEmployees: Obtener información de todos los empleados.
+  - DELETE /api/deleteEmployee/:id: Eliminar un empleado
   
 **Cursos**
-  - POST /api/courses: Registrar un curso.
-  - GET /api/courses/:employeeId: Obtener cursos asignados a un empleado.
+  - POST /api/addCourse: Registrar un curso.
+  - GET /api/getCourse: Obtener todos los cursos
+  - GET /api/getCourse/:id: Obtener cursos asignados a un empleado.
+  - PUT /api/updateCourse/:id: Actualizar un curso
   - PUT /api/courses/:id: Actualizar detalles de un curso.
+  - DELETE: /api/deleteCourse/:id: Eliminar un curso
+    
 **Autenticación**
-  - POST /api/auth/login: Iniciar sesión.
-  - POST /api/auth/logout: Cerrar sesión.
-  - GET /api/auth/session: Verificar la sesión activa.
+  - POST /api/login: Iniciar sesión.
+  - POST /api/logout: Cerrar sesión.
+  - GET /api/checkSession: Verificar la sesión activa.
+
+**Home**
+- GET '/': Accede a la pagina principal
 
 ## Estructura del proyecto
 ```plaintext
