@@ -73,7 +73,7 @@ Este proyecto es una API desarrollada con **Express.js**, diseñada para gestion
   - GET /api/checkSession: Verificar la sesión activa.
 
 **Home**
-- GET '/': Accede a la pagina principal
+- GET /: Accede a la pagina principal
 
 ## Estructura del proyecto
 ```plaintext
