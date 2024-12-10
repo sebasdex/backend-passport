@@ -27,21 +27,21 @@ Este proyecto es una API desarrollada con **Express.js**, diseñada para gestion
    pnpm install
 
 3. Configura las variables de entorno en un archivo .env:  
-   DATABASE_URL= base-datos-conexion  
-   ORIGIN_FRONT = url-frontend  
-   LOCAL_FRONT = url-front-local  
-   COOKIE_SECRET = frasesecreta  
-   NODE_ENV = developtment  
-   PORT = tu-puerto  
-   ROLE_ONE = rol-principal  
-   ROLE_TWO = rol-secundario  
-   REDIS_HOST= conexion-redis  
-   REDIS_PORT= puerto-redis  
-   REDIS_PASSWORD = contraseña-redis  
+   - DATABASE_URL= base-datos-conexion  
+   - ORIGIN_FRONT = url-frontend  
+   - LOCAL_FRONT = url-front-local  
+   - COOKIE_SECRET = frasesecreta  
+   - NODE_ENV = developtment  
+   - PORT = tu-puerto  
+   - ROLE_ONE = rol-principal  
+   - ROLE_TWO = rol-secundario  
+   - REDIS_HOST= conexion-redis  
+   - REDIS_PORT= puerto-redis  
+   - REDIS_PASSWORD = contraseña-redis  
 4. Ejecuta las migraciones de Prisma para preparar la base de datos:  
-   pnpm prisma migrate dev
+   - pnpm prisma migrate dev
 5. Inicia el servidor en modo desarrollo:  
-   pnpm dev
+   - pnpm dev
 
 ## Rutas Principales
 
