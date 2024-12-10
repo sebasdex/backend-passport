@@ -38,9 +38,9 @@ Este proyecto es una API desarrollada con **Express.js**, diseñada para gestion
    REDIS_HOST= conexion-redis  
    REDIS_PORT= puerto-redis  
    REDIS_PASSWORD = contraseña-redis  
-4. Ejecuta las migraciones de Prisma para preparar la base de datos:
+4. Ejecuta las migraciones de Prisma para preparar la base de datos:  
    pnpm prisma migrate dev
-5. Inicia el servidor en modo desarrollo:
+5. Inicia el servidor en modo desarrollo:  
    pnpm dev
 
 ## Rutas Principales
