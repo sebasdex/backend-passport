@@ -28,16 +28,16 @@ Este proyecto es una API desarrollada con **Express.js**, diseñada para gestion
 
 3. Configura las variables de entorno en un archivo .env:  
    DATABASE_URL= tu-base-datos-conexion  
-   ORIGIN_FRONT = https://passportcourse.netlify.app
-   LOCAL_FRONT = tu-conexion-front-local
-   COOKIE_SECRET = tufrasesecreta
-   NODE_ENV = developtment
-   PORT = tu-puerto
-   ROLE_ONE = tu-rol-principal
-   ROLE_TWO = tu-rol-secundario
-   REDIS_HOST= tu-conexion-redis
-   REDIS_PORT= tu-puerto-redis
-   REDIS_PASSWORD = contraseña-redis
+   ORIGIN_FRONT = https://passportcourse.netlify.app  
+   LOCAL_FRONT = tu-conexion-front-local  
+   COOKIE_SECRET = tufrasesecreta  
+   NODE_ENV = developtment  
+   PORT = tu-puerto  
+   ROLE_ONE = tu-rol-principal  
+   ROLE_TWO = tu-rol-secundario  
+   REDIS_HOST= tu-conexion-redis  
+   REDIS_PORT= tu-puerto-redis  
+   REDIS_PASSWORD = contraseña-redis  
 4. Ejecuta las migraciones de Prisma para preparar la base de datos:
    pnpm prisma migrate dev
 5. Inicia el servidor en modo desarrollo:
