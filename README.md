@@ -102,6 +102,9 @@ src/
 Este proyecto está configurado para ser desplegado en Vercel.  
 Asegúrate de configurar correctamente las variables de entorno en la plataforma antes de desplegar.
 
+## Frontend  
+Para ver el repositorio del lado del cliente:  
+https://github.com/sebasdex/passport-front
 
 
 
