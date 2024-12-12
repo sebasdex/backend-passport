@@ -20,8 +20,10 @@ Este proyecto es una API desarrollada con **Express.js**, diseñada para gestion
 
 ## Instalación y configuración
 1. Clona este repositorio:  
-   git clone https://github.com/sebasdex/backend-passport.git
-   accede a la carpeta del proyecto
+   ```
+   git clone https://github.com/sebasdex/backend-passport.git  
+   cd backend-passport
+   ```
 
 2. Instala las dependencias:
    pnpm install
