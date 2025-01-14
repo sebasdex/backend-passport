@@ -8,6 +8,7 @@ import homeRoutes from "./src/routes/home/home.js";
 import cors from "cors";
 import isAuth from "./src/middlewares/authMiddleware.js";
 import { userStart } from "./src/controller/userStart.js";
+import PrismaSessionStore from "./src/controller/sessionStore.js";
 
 const app = express();
 
@@ -37,10 +38,11 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      maxAge: 24 * 60 * 60 * 1000, // 1 día
-      secure: false, // Solo HTTPS (asegúrate de estar en un entorno seguro)
-      httpOnly: true, // Protege contra ataques XSS
+      maxAge: 24 * 60 * 60 * 1000,
+      secure: true,
+      httpOnly: true,
     },
+    store: new PrismaSessionStore(),
   })
 );
 app.use(express.json());
