@@ -8,70 +8,51 @@ import homeRoutes from "./src/routes/home/home.js";
 import cors from "cors";
 import isAuth from "./src/middlewares/authMiddleware.js";
 import { userStart } from "./src/controller/userStart.js";
-import RedisStore from "connect-redis";
-import { createClient } from "redis";
 
 const app = express();
-const redisClient = createClient({
-    password: process.env.REDIS_PASSWORD,
-    socket: {
-        host: process.env.REDIS_HOST,
-        port: process.env.REDIS_PORT,
-    }
-});
 
-redisClient.connect().catch((err) => {
-    console.error("Error al conectar a Redis:", err);
-});
-
-const redisStore = new RedisStore({ client: redisClient, prefix: "session:" });
 const port = process.env.PORT || 3000;
 
 const corsOptions = {
-    origin: (origin, callback) => {
-        const allowedOrigins = [
-            process.env.ORIGIN_FRONT,
-            process.env.LOCAL_FRONT,
-        ];
-        if (!origin) {
-            return callback(null, true);
-        }
-        if (allowedOrigins.includes(origin)) {
-            callback(null, true);
-        } else {
-            console.error(`Origen no permitido por CORS: ${origin}`);
-            callback(new Error("Origen no permitido por CORS"));
-        }
-    },
-    credentials: true,
+  origin: (origin, callback) => {
+    const allowedOrigins = [process.env.ORIGIN_FRONT, process.env.LOCAL_FRONT];
+    if (!origin) {
+      return callback(null, true);
+    }
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      console.error(`Origen no permitido por CORS: ${origin}`);
+      callback(new Error("Origen no permitido por CORS"));
+    }
+  },
+  credentials: true,
 };
 
 app.use(cors(corsOptions));
 app.set("trust proxy", 1);
-app.use(session({
-    store: redisStore,
+app.use(
+  session({
     secret: process.env.COOKIE_SECRET,
     resave: false,
-    saveUninitialized: true,
-    cookie: {
-        secure: process.env.NODE_ENV === "production",
-        maxAge: 1000 * 60 * 60 * 24,
-        httpOnly: true,
-    }
-}))
-
+    saveUninitialized: false,
+    cookie: { maxAge: 60000 }, // Tiempo de sesión en milisegundos (60 segundos aquí)
+  })
+);
 app.use(express.json());
 
-app.use('/auth', authRoutes);
-app.use('/employees', isAuth, employeeRoutes);
-app.use('/courses', isAuth, courseRoutes);
-app.use('/users', isAuth, userRoutes);
+app.use("/auth", authRoutes);
+app.use("/employees", isAuth, employeeRoutes);
+app.use("/courses", isAuth, courseRoutes);
+app.use("/users", isAuth, userRoutes);
 app.use(isAuth, homeRoutes);
 
-userStart().then(() => {
+userStart()
+  .then(() => {
     app.listen(port, () => {
-        console.log(`Server is running on port ${port}`);
+      console.log(`Server is running on port ${port}`);
     });
-}).catch((error) => {
+  })
+  .catch((error) => {
     console.error("Error al iniciar el servidor:", error);
-});
+  });
