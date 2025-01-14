@@ -36,11 +36,14 @@ app.use(
     secret: process.env.COOKIE_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: { maxAge: 60000 }, // Tiempo de sesión en milisegundos (60 segundos aquí)
+    cookie: {
+      maxAge: 24 * 60 * 60 * 1000, // 1 día
+      secure: false, // Solo HTTPS (asegúrate de estar en un entorno seguro)
+      httpOnly: true, // Protege contra ataques XSS
+    },
   })
 );
 app.use(express.json());
-
 app.use("/auth", authRoutes);
 app.use("/employees", isAuth, employeeRoutes);
 app.use("/courses", isAuth, courseRoutes);

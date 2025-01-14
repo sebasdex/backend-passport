@@ -33,25 +33,14 @@ CREATE TABLE "Courses" (
 -- CreateTable
 CREATE TABLE "Users" (
     "id" SERIAL NOT NULL,
-    "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
+    "role" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "employeeId" INTEGER NOT NULL,
-    "roleId" INTEGER NOT NULL,
 
     CONSTRAINT "Users_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "Roles" (
-    "id" SERIAL NOT NULL,
-    "name" TEXT NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
-
-    CONSTRAINT "Roles_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -68,6 +57,3 @@ ALTER TABLE "Courses" ADD CONSTRAINT "Courses_studentId_fkey" FOREIGN KEY ("stud
 
 -- AddForeignKey
 ALTER TABLE "Users" ADD CONSTRAINT "Users_employeeId_fkey" FOREIGN KEY ("employeeId") REFERENCES "Employees"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Users" ADD CONSTRAINT "Users_roleId_fkey" FOREIGN KEY ("roleId") REFERENCES "Roles"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
