@@ -11,7 +11,6 @@ async function login(req, res) {
                 email,
             },
         });
-        console.log(searchUser)
         if (!searchUser) {
             return res.status(400).json({ message: 'User not found' });
         }
