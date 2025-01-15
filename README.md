@@ -2,18 +2,17 @@
  
 El desarrollo de este proyecto tiene como objetivo consolidar y mejorar mis habilidades en **JavaScript**, **Express.js** y la creación de APIs RESTful. Estoy interesado en recibir **retroalimentación constructiva** sobre el código, la arquitectura o cualquier aspecto del proyecto que pueda optimizarse, con el fin de seguir aprendiendo y aplicando mejores prácticas en el desarrollo backend.  
 
-Este proyecto es una API desarrollada con **Express.js**, diseñada para gestionar usuarios, empleados y sus cursos. Maneja autenticación basada en sesiones con **express-session**, **Redis** para almacenar la sesión, y utiliza **Prisma** como ORM para interactuar con una base de datos PostgreSQL. 
+Este proyecto es una API desarrollada con **Express.js**, diseñada para gestionar usuarios, empleados y sus cursos. Maneja autenticación basada en sesiones con **express-session**, y utiliza **Prisma** como ORM para interactuar con una base de datos PostgreSQL. 
 
 ## Características
 - **Usuarios**: Registrar, actualizar y eliminar cuentas.  
 - **Empleados**: Administración de datos de empleados.  
-- **Cursos**: Gestión de cursos asignados a empleados.  
-- **Autenticación con sesiones**: Manejo de inicio de sesión y cierre de sesión mediante sesiones almacenadas en Redis.
+- **Cursos**: Gestión de cursos asignados a empleados.
+- **Autenticación con sesiones**: Manejo de inicio de sesión y cierre de sesión mediante sesiones almacenadas en db.
 
 ## Tecnologías utilizadas
 - **Node.js** con **Express.js** 
 - **pnpm** 
-- **Redis** 
 - **express-session**  
 - **Prisma**  
 - **PostgreSQL**  
@@ -38,9 +37,7 @@ NODE_ENV= development
 PORT= tu-puerto
 ROLE_ONE= rol-principal
 ROLE_TWO= rol-secundario
-REDIS_HOST= conexion-redis
-REDIS_PORT= puerto-redis
-REDIS_PASSWORD= contraseña-redis
+DEVELOPMENT = true/false (si estas en local o en produccion)
 ```
 4. Ejecuta las migraciones de Prisma para preparar la base de datos:  
    - pnpm prisma migrate dev
@@ -88,13 +85,14 @@ REDIS_PASSWORD= contraseña-redis
 ## Estructura del proyecto
 ```plaintext
 src/
-├── controller/         # Controladores de la lógica principal
+├── controller/         
 │   ├── authController.js
 │   └── userStart.js
-├── middlewares/        # Middlewares para autenticación y roles
+|   |__ sessionStore.js
+├── middlewares/        
 │   ├── authMiddleware.js
 │   └── roleMiddleware.js
-├── routes/             # Definición de rutas del API
+├── routes/            
 │   ├── courses/
 │   │   └── course.js
 │   ├── employees/
@@ -104,13 +102,13 @@ src/
 │   └── users/
 │       ├── users.js
 │       └── auth.js
-├── index.js            # Configuración principal del servidor
-└── vercel.json         # Configuración para despliegue en Vercel
+├── index.js           
+└── vercel.json         
 
 ```
 ## Despliegue
-Este proyecto está configurado para ser desplegado en Vercel.  
-Asegúrate de configurar correctamente las variables de entorno en la plataforma antes de desplegar.
+Este proyecto está configurado para ser desplegado.  
+Asegúrate de configurar correctamente las variables de entorno en la plataforma antes de continuar.
 
 ## Frontend  
 Para ver el repositorio del lado del cliente:  
