@@ -8,7 +8,7 @@ import homeRoutes from "./src/routes/home/home.js";
 import cors from "cors";
 import isAuth from "./src/middlewares/authMiddleware.js";
 import { userStart } from "./src/controller/userStart.js";
-import PrismaSessionStore from "./src/controller/sessionStore.js";
+import prismaStore from "./src/controller/sessionStore.js";
 
 const app = express();
 
@@ -42,7 +42,7 @@ app.use(
       secure: process.env.DEVELOPMENT,
       httpOnly: true,
     },
-    store: new PrismaSessionStore(),
+    store: prismaStore,
   })
 );
 app.use(express.json());

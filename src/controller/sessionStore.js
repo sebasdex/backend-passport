@@ -1,25 +1,21 @@
 import { PrismaClient } from "@prisma/client";
-import session from "express-session";
 
-const PrismaStore = session.Store;
 const prisma = new PrismaClient();
 
-class PrismaSessionStore extends PrismaStore {
-    constructor() {
-        super();
-    }
-
+const prismaStore = {
     async get(sid, callback) {
         try {
             const session = await prisma.session.findUnique({
                 where: { sid },
             });
 
-            if (!session) return callback(null, null);
+            if (!session) {
+                return callback(null, null);
+            }
 
             const now = new Date();
             if (session.expire < now) {
-                await this.destroy(sid, () => { });
+                await prismaStore.destroy(sid, () => { });
                 return callback(null, null);
             }
 
@@ -27,7 +23,7 @@ class PrismaSessionStore extends PrismaStore {
         } catch (err) {
             callback(err);
         }
-    }
+    },
 
     async set(sid, sess, callback) {
         try {
@@ -44,16 +40,19 @@ class PrismaSessionStore extends PrismaStore {
         } catch (err) {
             callback(err);
         }
-    }
+    },
 
     async destroy(sid, callback) {
         try {
-            await prisma.session.delete({ where: { sid } });
+            await prisma.session.delete({
+                where: { sid },
+            });
+
             callback(null);
         } catch (err) {
             callback(err);
         }
-    }
-}
+    },
+};
 
-export default PrismaSessionStore;
+export default prismaStore;
