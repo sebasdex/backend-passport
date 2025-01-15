@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 const router = Router();
 
 router.post("/api/addUser", async (req, res) => {
-    if (req.user.role !== process.env.ADMIN_ROLE) {
+    if (req.user.role !== process.env.ROLE_ONE) {
         return res.status(401).json({ message: 'No tienes permisos para acceder a esta ruta' });
     }
     const { email, password, role, employeeId } = req.body;
