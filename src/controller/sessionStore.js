@@ -9,7 +9,6 @@ class PrismaSessionStore extends PrismaStore {
         super();
     }
 
-    // Recupera una sesión por su ID
     async get(sid, callback) {
         try {
             const session = await prisma.session.findUnique({
@@ -20,7 +19,7 @@ class PrismaSessionStore extends PrismaStore {
 
             const now = new Date();
             if (session.expire < now) {
-                await this.destroy(sid, () => { }); // Limpia la sesión expirada
+                await this.destroy(sid, () => { });
                 return callback(null, null);
             }
 
@@ -30,7 +29,6 @@ class PrismaSessionStore extends PrismaStore {
         }
     }
 
-    // Crea o actualiza una sesión
     async set(sid, sess, callback) {
         try {
             const now = new Date();
