@@ -39,8 +39,9 @@ app.use(
     saveUninitialized: false,
     cookie: {
       maxAge: 24 * 60 * 60 * 1000,
-      secure: process.env.DEPLOYMENT === "true",
+      secure: process.env.DEPLOYMENT === "production",
       httpOnly: true,
+      sameSite: "none"
     },
     store: new PrismaSessionStore(),
   })
