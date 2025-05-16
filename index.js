@@ -41,7 +41,8 @@ app.use(
       maxAge: 24 * 60 * 60 * 1000,
       secure: process.env.DEPLOYMENT === "production",
       httpOnly: true,
-      sameSite: process.env.DEPLOYMENT === "production" ? "none" : "lax",
+      sameSite: 'lax'
+      // sameSite: process.env.DEPLOYMENT === "production" ? "none" : "lax",
     },
     store: new PrismaSessionStore(),
   })
